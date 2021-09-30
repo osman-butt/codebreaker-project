@@ -2,15 +2,19 @@ import java.util.Arrays;
 
 public class CodeBreaker {
     public static void main(String[] args) {
-        String s = "Osman Butt";
-        String encodedString = numberCypherEncoder(s);
+        // Number cypher
+        String inputStringToNumberCypher = "hello world";
+        String encodedString = numberCypherEncoder(inputStringToNumberCypher);
         String decodedString = numberCypherDecoder(encodedString);
-        System.out.println(encodedString);
-        System.out.println(decodedString);
-        String encodedCeasar = ceasarEncoder("hello world");
-        System.out.println(encodedCeasar);
-//        System.out.println((int) 'h'+3);
-//        System.out.println((char) (107));
+        System.out.println("Number encoded string = " + encodedString);
+        System.out.println("Number decoded string = "+decodedString);
+
+        // Ceasar cypher
+        String inputStringToCeasarCypher = "hello world";
+        String encodedCeasar = ceasarEncoder(inputStringToCeasarCypher);
+        String decodedCeasar = ceasarDecoder(encodedCeasar);
+        System.out.println("Ceasar encoded string = "+encodedCeasar);
+        System.out.println("Ceasar decoded string = "+decodedCeasar);
     }
 
     public static String numberCypherEncoder(String decodedString){
@@ -37,8 +41,8 @@ public class CodeBreaker {
         for (int i = 0; i < encodedStringToArray.length; i++) {
             encodedStringToIntArray[i] = Integer.valueOf(encodedStringToArray[i]);
         }
-        for (int i = 0; i<encodedStringToIntArray.length; i++){
-            char decodedChar = (char) (encodedStringToIntArray[i] + codePointStart);
+        for (int stringToInt : encodedStringToIntArray) {
+            char decodedChar = (char) (stringToInt + codePointStart);
             decodedString += decodedChar;
         }
         return decodedString;
@@ -58,6 +62,27 @@ public class CodeBreaker {
                 encodedString += " ";
             }else{
                 int charToIntShifted =  charArray[i] + amountToShiftAlphabet;
+                char shiftedIntToChar = (char) (charToIntShifted);
+                encodedString += shiftedIntToChar;
+            }
+        }
+        return encodedString;
+    }
+
+    public static String ceasarDecoder(String decodedString){
+        int amountToShiftAlphabet = 3;
+        String decodedStringToLower = decodedString.toLowerCase();
+        String encodedString = "";
+        //Convert string to char array
+        char[] charArray = new char[decodedStringToLower.length()];
+        for (int i = 0; i<decodedStringToLower.length(); i++){
+            charArray[i] = decodedStringToLower.charAt(i);
+        }
+        for (int i = 0; i<decodedStringToLower.length(); i++){
+            if (charArray[i]==' '){
+                encodedString += " ";
+            }else{
+                int charToIntShifted =  charArray[i] - amountToShiftAlphabet;
                 char shiftedIntToChar = (char) (charToIntShifted);
                 encodedString += shiftedIntToChar;
             }
